@@ -1,10 +1,11 @@
-package tk;
+package tk.app.v1;
 
 import org.elasticsearch.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @SpringBootApplication
+@ComponentScan("tk.tommy.es")
 public class Application implements CommandLineRunner {
 
     @Autowired

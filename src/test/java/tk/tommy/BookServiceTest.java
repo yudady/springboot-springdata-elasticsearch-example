@@ -1,6 +1,6 @@
 package tk.tommy;
 
-import tk.Application;
+import tk.app.v1.Application;
 import tk.tommy.es.model.Book;
 import tk.tommy.es.service.BookService;
 import org.junit.Before;
