@@ -19,11 +19,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 
 @SpringBootApplication
 @ComponentScan("tk.tommy.es")
-public class Application implements CommandLineRunner {
+@EnableElasticsearchRepositories(basePackages = "tk.tommy.es.repository")
+public class ApplicationV2 implements CommandLineRunner {
 
 
     @Autowired
@@ -35,7 +37,7 @@ public class Application implements CommandLineRunner {
 
 
     public static void main(String args[]) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ApplicationV2.class, args);
 
     }
 

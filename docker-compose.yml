@@ -60,3 +60,20 @@ services:
         ports:
            - 9300:9300
            - 9200:9200
+    elasticsearch-hq:
+        image: elastichq/elasticsearch-hq:release-v3.3.0
+        container_name: elasticsearch-hq-330
+        depends_on:
+            - elasticsearch
+        ports:
+            - "5000:5000"
+    kibana:
+        image: docker.elastic.co/kibana/kibana:6.5.4
+        container_name: kibana
+        environment:
+            SERVER_NAME: kibana
+        depends_on:
+            - elasticsearch
+        ports:
+            - "5601:5601"
+

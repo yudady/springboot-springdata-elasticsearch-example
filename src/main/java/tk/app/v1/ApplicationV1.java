@@ -9,15 +9,17 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import tk.tommy.es.service.BookService;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import tk.tommy.es.model.Book;
+import tk.tommy.es.service.BookService;
 
 import java.util.List;
 import java.util.Map;
 
 @SpringBootApplication
 @ComponentScan("tk.tommy.es")
-public class Application implements CommandLineRunner {
+@EnableElasticsearchRepositories(basePackages = "tk.tommy.es.repository")
+public class ApplicationV1 implements CommandLineRunner {
 
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
@@ -26,7 +28,7 @@ public class Application implements CommandLineRunner {
     private BookService bookService;
 
     public static void main(String args[]) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ApplicationV1.class, args);
 
     }
 
@@ -45,7 +47,7 @@ public class Application implements CommandLineRunner {
         bookService.save(new Book("1001", "Elasticsearch Basics", "Rambabu Posa", "23-FEB-2017"));
         bookService.save(new Book("1002", "Apache Lucene Basics", "Rambabu Posa", "13-MAR-2017"));
         bookService.save(new Book("1003", "Apache Solr Basics", "Rambabu Posa", "21-MAR-2017"));
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
 
             Book b = new Book("1003" + i, "Apache Solr Basics" + i, "Rambabu Posa" + i, "21-MAR-2017" + i);
             bookService.save(b);

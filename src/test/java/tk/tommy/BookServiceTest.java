@@ -1,41 +1,45 @@
 package tk.tommy;
 
-import tk.app.v1.Application;
-import tk.tommy.es.model.Book;
-import tk.tommy.es.service.BookService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
+import tk.tommy.es.model.Book;
+import tk.tommy.es.service.BookService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = BookServiceTest.class)
+@ComponentScan("tk.tommy.es")
+@EnableElasticsearchRepositories(basePackages = "tk.tommy.es.repository")
 public class BookServiceTest {
 
     @Autowired
     private BookService bookService;
 
     @Autowired
-    private ElasticsearchTemplate esTemplate;
+    private ElasticsearchOperations elasticsearchOperations;
 
     @Before
     public void before() {
-        esTemplate.deleteIndex(Book.class);
-        esTemplate.createIndex(Book.class);
-        esTemplate.putMapping(Book.class);
-        esTemplate.refresh(Book.class);
+        elasticsearchOperations.deleteIndex(Book.class);
+        elasticsearchOperations.createIndex(Book.class);
+        elasticsearchOperations.putMapping(Book.class);
+        elasticsearchOperations.refresh(Book.class);
     }
 
     @Test
@@ -57,12 +61,12 @@ public class BookServiceTest {
         Book book = new Book("1001", "Elasticsearch Basics", "Rambabu Posa", "23-FEB-2017");
         bookService.save(book);
 
-//        Book testBook = bookService.findOne(book.getId());
-//
-//        assertNotNull(testBook.getId());
-//        assertEquals(testBook.getTitle(), book.getTitle());
-//        assertEquals(testBook.getAuthor(), book.getAuthor());
-//        assertEquals(testBook.getReleaseDate(), book.getReleaseDate());
+        Book testBook = bookService.findOne(book.getId());
+
+        assertNotNull(testBook.getId());
+        assertEquals(testBook.getTitle(), book.getTitle());
+        assertEquals(testBook.getAuthor(), book.getAuthor());
+        assertEquals(testBook.getReleaseDate(), book.getReleaseDate());
 
     }
 
