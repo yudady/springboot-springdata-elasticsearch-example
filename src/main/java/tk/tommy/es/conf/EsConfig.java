@@ -4,6 +4,7 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -14,11 +15,15 @@ import java.net.InetAddress;
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "tk.tommy.es.repository")
 public class EsConfig {
-    private String EsHost = "192.168.79.50";
 
-    private int EsPort = 9300;
+    @Value("${myelk.EsHost}")
+    private String EsHost;
 
-    private String EsClusterName = "docker-cluster";
+    @Value("${myelk.EsPort}")
+    private int EsPort;
+
+    @Value("${myelk.EsClusterName}")
+    private String EsClusterName;
 
     @Bean
     public TransportClient transportClient() throws Exception {

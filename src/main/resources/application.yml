@@ -12,4 +12,9 @@ spring:
        timeouts:
          key-value: #elasticsearch数据存储目录
 
+myelk:
+  EsHost: 192.168.79.50
+  EsPort: 9300
+  EsClusterName: elasticsearch
+
 

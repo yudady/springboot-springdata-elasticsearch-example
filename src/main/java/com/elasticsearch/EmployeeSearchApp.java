@@ -20,7 +20,7 @@ import java.net.InetAddress;
  */
 public class EmployeeSearchApp {
     public static void main(String[] args) throws  Exception{
-        Settings seeting  = Settings.builder().put("cluster.name","docker-cluster").build();
+        Settings seeting  = Settings.builder().put("cluster.name","elasticsearch").build();
 
         TransportClient client = new PreBuiltTransportClient(seeting)
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.79.50"),9300));

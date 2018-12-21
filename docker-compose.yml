@@ -46,15 +46,17 @@ services:
         image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
         #container_name: elasticsearch
         environment:
+          - cluster.name=elasticsearch
           - discovery.type=single-node
           - network.bind_host=0.0.0.0
         ulimits:
             memlock:
               soft: -1
               hard: -1
+        volumes:
+           #- ./data:/usr/share/elasticsearch/data
+           - ./data:/var/lib/elasticsearch
+           - ./logs:/var/logs/elasticsearch
         ports:
            - 9300:9300
            - 9200:9200
-#docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.5.4
-
-
